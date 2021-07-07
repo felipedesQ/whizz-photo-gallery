@@ -1,0 +1,14 @@
+index:
+  path: /
+  controller: Whizz\Gallery\Controller\IndexController::index
+  methods: [GET]
+
+category_add:
+  path: /api/add-category
+  defaults:
+    _controller: Whizz\Gallery\Controller\GalleryController::createAction
+
+category_list:
+  path: /api/retrieve-categories
+  defaults:
+    _controller: Whizz\Gallery\Controller\GalleryController::listAction

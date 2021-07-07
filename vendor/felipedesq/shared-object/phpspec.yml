@@ -1,0 +1,7 @@
+suites:
+    kegstar_suite:
+        namespace: Whizz\SharedObject
+        spec_prefix: specifications
+        src_path: "%paths.config%/src"
+        spec_path: "%paths.config%/tests"
+        psr4_prefix: Whizz\SharedObject

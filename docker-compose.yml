@@ -1,0 +1,46 @@
+version: '3'
+
+networks:
+  whizz-network:
+
+services:
+  www:
+    container_name: whizz-photo-gallery-www
+    build: ./.docker/local/nginx
+    ports:
+      - 81:81
+      - 82:80
+    volumes:
+      - .:/whizz-photo-gallery
+    links:
+      - app
+    networks:
+      whizz-network:
+        aliases:
+          - test.whizz.portal.com
+
+  app:
+    container_name: whizz-photo-gallery-app
+    build: ./.docker/local/php
+    volumes:
+      - .:/whizz-photo-gallery
+    env_file:
+      - ./.docker/local/.env
+    links:
+      - db
+    networks:
+      - whizz-network
+    hostname: app
+
+  db:
+    container_name: whizz-photo-gallery-db
+    image: mysql:5.7
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: changeme
+      MYSQL_USER: whizz
+      MYSQL_PASSWORD: changeme
+      MYSQL_DATABASE: read_model
+    networks:
+      - whizz-network
